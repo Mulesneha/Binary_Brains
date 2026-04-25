@@ -1,34 +1,42 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Crop Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>🌱 Crop Decision System</h1>
+    <div class="container">
+        <h1><span>🌱</span> Crop Decision System</h1>
 
-    <form action="/predict" method="post">
-        <label>Soil Type:</label>
-        <select name="soil">
-            <option value="sandy">Sandy</option>
-            <option value="clay">Clay</option>
-            <option value="loamy">Loamy</option>
-        </select><br><br>
+        <form action="/predict" method="post">
+            <div>
+                <label>Soil Type:</label>
+                <select name="soil" required>
+                    <option value="" disabled selected>Select soil</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="clay">Clay</option>
+                    <option value="loamy">Loamy</option>
+                </select>
+            </div>
 
-        <label>Temperature:</label>
-        <input type="number" name="temperature"><br><br>
+            <div>
+                <label>Temperature °C:</label>
+                <input type="number" name="temperature" placeholder="e.g. 25" required>
+            </div>
 
-        <label>Rainfall:</label>
-        <input type="number" name="rainfall"><br><br>
+            <div>
+                <label>Rainfall mm:</label>
+                <input type="number" name="rainfall" placeholder="e.g. 200" required>
+            </div>
 
-        <button type="submit">Predict Crop</button>
-    </form>
+            <button type="submit">Predict Crop</button>
+        </form>
 
-    {% if result %}
-        <h2>Recommended Crop: {{ result }}</h2>
-    {% endif %}
+        {% if result %}
+            <div class="result">
+                <h2>Recommended Crop: <span>{{ result }}</span></h2>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
-
-
-
