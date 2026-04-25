@@ -1,21 +1,26 @@
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
+import sklearn.tree
 import pickle
-
-# Load data
+   
 data = pd.read_csv("dataset.csv")
-
-# Convert categorical to numbers
+print("Before mapping:")
+print(data.isnull().sum()) 
+   
 data['soil'] = data['soil'].map({'sandy': 0, 'clay': 1, 'loamy': 2})
-
+   
+print("After mapping:")
+print(data.isnull().sum())  
+   
 X = data[['soil', 'temperature', 'rainfall']]
 y = data['crop']
+   
 
-# Train model
-model = DecisionTreeClassifier()
+data = data.dropna()
+X = data[['soil', 'temperature', 'rainfall']]
+y = data['crop']
+   
+model = sklearn.tree.DecisionTreeClassifier()
 model.fit(X, y)
-
-# Save model
+   
 pickle.dump(model, open("model.pkl", "wb"))
-
 print("Model trained and saved!")
