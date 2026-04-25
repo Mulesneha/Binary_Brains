@@ -1,4 +1,4 @@
-# 🌱 Crop Decision Intelligence System
+<img width="959" height="480" alt="image" src="https://github.com/user-attachments/assets/4eba8743-e9a1-4b3c-9ffd-5e9789ee774a" /># 🌱 Crop Decision Intelligence System
 
 A smart web-based application that recommends the most suitable crop based on soil and environmental conditions, along with fertilizer suggestions to improve soil fertility.
 
@@ -62,47 +62,6 @@ Binary_Brains/
 ├── templates/
 │   └── index.html
 ```
-
----
-
-## ⚙️ How to Run the Project
-
-1. Install dependencies:
-
-```
-pip install flask pandas scikit-learn
-```
-
-2. Run the model training:
-
-```
-python model.py
-```
-
-3. Start the Flask app:
-
-```
-python app.py
-```
-
-4. Open in browser:
-
-```
-http://127.0.0.1:5000
-```
-
----
-
-## 📸 Screenshots
-
-Add your project screenshots here:
-
-```
-![Home Page](link_here)
-![Result Output](link_here)
-```
-
----
 
 ## 🎯 Future Enhancements
 
