@@ -1,26 +1,75 @@
 import pandas as pd
-import sklearn.tree
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 import pickle
-   
-data = pd.read_csv("dataset.csv")
-print("Before mapping:")
-print(data.isnull().sum()) 
-   
-data['soil'] = data['soil'].map({'sandy': 0, 'clay': 1, 'loamy': 2})
-   
-print("After mapping:")
-print(data.isnull().sum())  
-   
-X = data[['soil', 'temperature', 'rainfall']]
-y = data['crop']
-   
 
-data = data.dropna()
-X = data[['soil', 'temperature', 'rainfall']]
-y = data['crop']
-   
-model = sklearn.tree.DecisionTreeClassifier()
-model.fit(X, y)
-   
-pickle.dump(model, open("model.pkl", "wb"))
-print("Model trained and saved!")
+
+def load_data(path):
+    data = pd.read_csv(path)
+    print("Dataset Loaded Successfully!")
+    return data
+
+
+def preprocess_data(data):
+    print("\nBefore Cleaning:")
+    print(data.isnull().sum())
+
+ 
+    soil_map = {'sandy': 0, 'clay': 1, 'loamy': 2}
+    data['soil'] = data['soil'].map(soil_map)
+
+    data = data.dropna()
+
+    print("\nAfter Cleaning:")
+    print(data.isnull().sum())
+
+    return data
+
+
+
+def split_data(data):
+    X = data[['soil', 'temperature', 'rainfall', 'ph',
+              'nitrogen', 'phosphorus', 'potassium', 'humidity']]
+    
+    y = data['crop']
+
+    return train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+
+def train_model(X_train, y_train):
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    print("\nModel Training Completed!")
+    return model
+
+
+def evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+
+    print(f"\nModel Accuracy: {accuracy * 100:.2f}%")
+    return accuracy
+
+
+def save_model(model, filename="model.pkl"):
+    pickle.dump(model, open(filename, "wb"))
+    print("\nModel saved as model.pkl")
+
+
+
+def main():
+    data = load_data("dataset.csv")
+    data = preprocess_data(data)
+
+    X_train, X_test, y_train, y_test = split_data(data)
+
+    model = train_model(X_train, y_train)
+    evaluate_model(model, X_test, y_test)
+
+    save_model(model)
+
+
+if __name__ == "__main__":
+    main()
