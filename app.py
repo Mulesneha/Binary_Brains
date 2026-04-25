@@ -19,7 +19,6 @@ def predict():
     soil_map = {'sandy': 0, 'clay': 1, 'loamy': 2}
     soil_val = soil_map[soil]
 
-    # Predict using model
     prediction = model.predict([[soil_val, temp, rainfall]])
 
     return render_template("index.html", result=prediction[0])
