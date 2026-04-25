@@ -3,7 +3,6 @@ import pickle
 
 app = Flask(__name__)
 
-# Load the trained model
 model = pickle.load(open("model.pkl", "rb"))
 
 @app.route("/")
@@ -16,7 +15,7 @@ def predict():
     temp = float(request.form["temperature"])
     rainfall = float(request.form["rainfall"])
 
-    # Convert soil type to number - must match model.py mapping
+    
     soil_map = {'sandy': 0, 'clay': 1, 'loamy': 2}
     soil_val = soil_map[soil]
 
